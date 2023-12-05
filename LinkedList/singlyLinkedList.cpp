@@ -94,7 +94,23 @@ bool SinglyLinkedList::search(int data) {
     return false;
 }
 void SinglyLinkedList::sort() {
+    int tempData;
 
+    if(head == NULL) return;
+
+    Node* currNode = head;
+    while(currNode != NULL) {
+        Node* indexNode = currNode->next;
+        while(indexNode != NULL) {
+            if(currNode->data < indexNode->data) {
+                tempData = currNode->data;
+                currNode->data = indexNode->data;
+                indexNode->data = tempData;
+            }
+            indexNode = indexNode->next;
+        }
+        currNode = currNode->next;
+    }
 }
 void SinglyLinkedList::printList() {
     Node* currNode = head;
@@ -119,9 +135,13 @@ int main()
     list.insertAfter(30, 70);
     list.insertAfter(10, 80);
     list.printList();
+    
     list.deleteNode(20);
     list.printList();
     cout<< list.search(30)<< endl;
+
+    list.sort();
+    list.printList();
 
     return 0;
 }
