@@ -64,10 +64,34 @@ bool SinglyLinkedList::insertAfter(int value, int data) {
     return false;
 }
 bool SinglyLinkedList::deleteNode(int data) {
-    
+    if(head == NULL) return false;
+
+    if(head->data == data) {
+        Node* tempNode = head;
+        head = head->next;
+        delete tempNode;
+        return true;
+    }
+
+    Node* currNode = head;
+    while (currNode->next != NULL) {
+        if(currNode->next->data == data) {
+            Node* tempNode = currNode->next;
+            currNode->next = currNode->next->next;
+            delete tempNode;
+            return true;
+        }
+        currNode = currNode->next;
+    }
+    return false;
 }
 bool SinglyLinkedList::search(int data) {
-
+    Node* currNode = head;
+    while(currNode != NULL) {
+        if(currNode->data == data) return true;
+        currNode = currNode->next;
+    }
+    return false;
 }
 void SinglyLinkedList::sort() {
 
@@ -84,19 +108,20 @@ void SinglyLinkedList::printList() {
 int main()
 {
     SinglyLinkedList list;
-    // list.printList();
-    // list.insertAtBegining(10);
-    // list.insertAtBegining(20);
-    // list.printList();
-    // list.insertAtBegining(50);
-    // list.printList();
-
-    list.insertAtEnd(10);
-    list.insertAtEnd(20);
-    list.insertAtEnd(30);
-    list.insertAfter(30,40);
-    list.insertAfter(10,50);
+    list.insertAtBegining(10);
+    list.insertAtBegining(20);
+    list.insertAtBegining(30);
     list.printList();
+
+    list.insertAtEnd(40);
+    list.insertAtEnd(50);
+    list.insertAtEnd(60);
+    list.insertAfter(30, 70);
+    list.insertAfter(10, 80);
+    list.printList();
+    list.deleteNode(20);
+    list.printList();
+    cout<< list.search(30)<< endl;
 
     return 0;
 }
