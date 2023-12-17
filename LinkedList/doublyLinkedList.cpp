@@ -18,8 +18,8 @@ class DoublyLinkedList {
         bool insertAtEnd(int);
         bool insertAfter(int, int);
         bool insertBefore(int, int);
-        bool deleteFront(int);
-        bool deleteEnd(int);
+        bool deleteFront();
+        bool deleteEnd();
         bool deleteNode(int);
         bool clear();
         bool search(int);
@@ -44,6 +44,13 @@ bool DoublyLinkedList::insertAtEnd(int data) {
     newNode->prev = currNode;
     return true;
 }
+bool DoublyLinkedList::insertAtFront(int data) {
+    Node* newNode = new Node(data);
+    newNode->next = head;
+    head->prev = newNode;
+    head = newNode;
+    return true;
+}
 void DoublyLinkedList::printList() {
     Node* currNode = head;
     while (currNode != NULL)
@@ -57,9 +64,11 @@ void DoublyLinkedList::printList() {
 int main() {
 
     DoublyLinkedList list;
+    list.insertAtFront(100);
     list.insertAtEnd(10);
     list.insertAtEnd(20);
     list.insertAtEnd(30);
+    // list.insertAtFront(50);
 
     list.printList();
 
