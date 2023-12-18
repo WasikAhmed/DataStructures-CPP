@@ -46,11 +46,39 @@ bool DoublyLinkedList::insertAtEnd(int data) {
 }
 bool DoublyLinkedList::insertAtFront(int data) {
     Node* newNode = new Node(data);
+    if(head == NULL) {
+        head = newNode;
+        return true;
+    }
     newNode->next = head;
     head->prev = newNode;
     head = newNode;
     return true;
 }
+bool DoublyLinkedList::insertAfter(int value, int data) {
+    Node* currNode = head;
+    while (currNode != NULL) {
+        if (currNode->data == value) {
+            break; 
+        }
+        currNode = currNode->next; 
+    }
+
+    if (currNode != NULL) {
+        Node* newNode = new Node(data);
+        newNode->prev = currNode;
+        newNode->next = currNode->next;
+
+        if (currNode->next != NULL) {
+            currNode->next->prev = newNode;
+        }
+        
+        currNode->next = newNode;
+        return true;
+    }
+    return false;
+}
+
 void DoublyLinkedList::printList() {
     Node* currNode = head;
     while (currNode != NULL)
@@ -68,9 +96,12 @@ int main() {
     list.insertAtEnd(10);
     list.insertAtEnd(20);
     list.insertAtEnd(30);
-    // list.insertAtFront(50);
+    list.insertAtFront(50);
+    list.insertAfter(100, 1000);
+    list.insertAfter(30, 300);
 
     list.printList();
+
 
 
     return 0;
