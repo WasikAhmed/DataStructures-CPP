@@ -78,7 +78,30 @@ bool DoublyLinkedList::insertAfter(int value, int data) {
     }
     return false;
 }
-
+bool DoublyLinkedList::insertBefore(int value, int data) {
+    Node* currNode = head;
+    while(currNode != NULL) {
+        if(currNode->data == value) {
+            break;
+        }
+        currNode = currNode->next;
+    }
+    if(currNode != NULL) {
+        Node* newNode = new Node(data);
+        newNode->prev = currNode->prev;
+        newNode->next = currNode;
+        
+        if (currNode->prev != NULL) {
+            currNode->prev->next = newNode;
+        } else {
+            head = newNode;
+        }
+        
+        currNode->prev = newNode;
+        return true;
+    }
+    return false;
+}
 void DoublyLinkedList::printList() {
     Node* currNode = head;
     while (currNode != NULL)
